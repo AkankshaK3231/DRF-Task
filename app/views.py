@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import generics
-from rest_framework import status
-from .models import Post
-from .serializers import PostSerializer
-from django.shortcuts import get_object_or_404
+from .models import Post, Category
+from .serializers import PostSerializer, CategorySerializer
+
 
 # Create your views here.
 class PostListAPIView(generics.ListAPIView):
@@ -42,6 +41,11 @@ class PostRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 class PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')

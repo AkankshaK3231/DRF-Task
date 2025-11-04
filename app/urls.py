@@ -1,5 +1,4 @@
 from django.urls import path, include
-from . import views
 from rest_framework.routers import DefaultRouter
 from .views import (
     PostListAPIView,
@@ -12,10 +11,13 @@ from .views import (
     PostRetrieveDestroyAPIView,
     PostRetrieveUpdateDestroyAPIView,
     PostViewSet,
+    CategoryViewSet,
 )
 
 router = DefaultRouter()
 router.register(r'posts', PostViewSet, basename='post')
+router.register(r'categories', CategoryViewSet, basename='category')
+
 urlpatterns = [
     # Generic API views 
     path('posts/list/', PostListAPIView.as_view(), name='post-list'),
@@ -31,5 +33,5 @@ urlpatterns = [
     path('posts/retrieve-update-delete/<int:pk>/', PostRetrieveUpdateDestroyAPIView.as_view(), name='post-retrieve-update-delete'),
 
     # ViewSet URLs
-    path('viewset/', include(router.urls)),
+    path('', include(router.urls)),
 ]
