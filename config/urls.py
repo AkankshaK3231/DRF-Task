@@ -7,6 +7,7 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
+from rest_framework.authtoken import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -33,7 +34,8 @@ urlpatterns += [
     #path("api/", include("config.api_router")),
     path('api/', include('app.urls')),
     # DRF auth token
-    path("api/auth-token/", obtain_auth_token, name="obtain_auth_token"),
+    path('api-auth/', include('rest_framework.urls')),
+    path("api/auth-token/", views.obtain_auth_token, name="api_token_auth"),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
         "api/docs/",
@@ -41,6 +43,7 @@ urlpatterns += [
         name="api-docs",
     ),
 ]
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
