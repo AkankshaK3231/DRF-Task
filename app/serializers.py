@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Post, Category
 from rest_framework.validators import UniqueTogetherValidator
+from dj_rest_auth.registration.serializers import RegisterSerializer
 
 def validate_title_no_numbers(value):
     if any(char.isdigit() for char in value):
@@ -47,6 +48,14 @@ class PostSerializer(serializers.ModelSerializer):
         content = data.get('content', '').lower()
         if title in content:
             raise serializers.ValidationError("Title should not appear in content.")
+        return data
+    
+class CustomRegisterSerializer(RegisterSerializer):
+    first_name = serializers.CharField(required=False)
+
+    def get_cleaned_data(self):
+        data = super().get_cleaned_data()
+        data['first_name'] = self.validated_data.get('first_name', '')
         return data
     
     

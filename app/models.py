@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import EmailValidator, MaxLengthValidator
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
@@ -12,6 +13,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+User = get_user_model() 
+
 class Post(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),
@@ -22,6 +25,7 @@ class Post(models.Model):
     ])
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     author_email = models.EmailField(validators=[EmailValidator(message="Enter a valid email address")])
     is_featured = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)

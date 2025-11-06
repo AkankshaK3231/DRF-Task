@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.authtoken import views
+from .views_social import GitHubLogin
 from .views import (
     PostListAPIView,
     PostCreateAPIView,
@@ -38,4 +39,5 @@ urlpatterns = [
     path('', include(router.urls)),
 
     path('auth-token/'  , views.obtain_auth_token, name='api_token_auth'), 
+    path('github/', GitHubLogin.as_view(), name='github_login'),
 ]
