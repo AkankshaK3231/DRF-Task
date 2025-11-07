@@ -25,7 +25,7 @@ urlpatterns = [
     # Generic API views 
     path('posts/list/', PostListAPIView.as_view(), name='post-list'),
     path('posts/create/', PostCreateAPIView.as_view(), name='post-create'),
-    path('posts/<int:pk>/', PostRetrieveAPIView.as_view(), name='post-retrieve'),
+    path('posts/<int:pk>/', PostRetrieveUpdateDestroyAPIView.as_view(), name='post-retrieve-update-delete'),
     path('posts/update/<int:pk>/', PostUpdateAPIView.as_view(), name='post-update'),
     path('posts/delete/<int:pk>/', PostDestroyAPIView.as_view(), name='post-delete'),
 
@@ -40,4 +40,5 @@ urlpatterns = [
 
     path('auth-token/'  , views.obtain_auth_token, name='api_token_auth'), 
     path('github/', GitHubLogin.as_view(), name='github_login'),
+  
 ]

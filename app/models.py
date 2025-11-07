@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import EmailValidator, MaxLengthValidator
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 # Create your models here.
 
@@ -25,7 +26,7 @@ class Post(models.Model):
     ])
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
     author_email = models.EmailField(validators=[EmailValidator(message="Enter a valid email address")])
     is_featured = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)

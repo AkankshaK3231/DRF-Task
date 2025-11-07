@@ -20,7 +20,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(read_only=True)  
     category_id = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), source='category', write_only=True)
-
+    created_by = serializers.StringRelatedField(read_only=True)
     title = serializers.CharField(max_length=200,validators=[validate_title_no_numbers])
     content = serializers.CharField()
     author_email = serializers.EmailField()
@@ -32,9 +32,8 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'category', 'category_id',
-            'author_email', 'is_featured', 'rating', 'status',
-            'created_at']
+        fields = '__all__'
+        read_only_fields = ['id', 'created_by', 'created_at']
         validators = [
             UniqueTogetherValidator(
                 queryset=Post.objects.all(),
